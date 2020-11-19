@@ -1,16 +1,6 @@
-FROM node
-MAINTAINER Niko Bellic <niko.bellic@kakaocorp.com>
-
-RUN mkdir -p /usr/src/app
+FROM node:alpine
 WORKDIR /usr/src/app
-
-RUN npm install -g grunt
-
-COPY package.json /usr/src/app/package.json
-RUN npm install
-
-COPY . /usr/src/app
-
+RUN yarn config set registry https://registry.npm.taobao.org && yarn add http-server
+COPY . .
 EXPOSE 9100
-
-CMD grunt server
+CMD node_modules/http-server/bin/http-server _site -p 9100
